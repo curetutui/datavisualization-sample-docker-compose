@@ -1,0 +1,2 @@
+FROM timescale/timescaledb-postgis:latest-pg12
+ENV LANG ja_JP.utf8

@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  web:
+    image: grafana/grafana:latest
+    container_name: grafana-sv
+    hostname: grafana-sv
+    ports:
+      - "3000:3000"
+
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile.postgres
+    image: timescale/timescaledb-postgis:latest-pg12
+    container_name: postgres-sv
+    hostname: postgres-sv
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres12345
+      - PGPASSWORD=postgres12345
+      - POSTGRES_DB=tutorial
+    volumes:
+      - ./docker/db/init:/docker-entrypoint-initdb.d
+      - ./docker/work/data:/tmp/data
